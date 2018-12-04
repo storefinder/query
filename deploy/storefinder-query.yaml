@@ -1,0 +1,26 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Route
+metadata:
+  name: store-query-route
+  namespace: default
+spec:
+  traffic:
+    - configurationName: store-query-configuration
+      percent: 100
+---
+apiVersion: serving.knative.dev/v1alpha1
+kind: Configuration
+metadata:
+  name: store-query-configuration
+  namespace: default
+spec:
+  revisionTemplate:
+    metadata:
+      labels:
+        knative.dev/type: container
+    spec:
+      container:
+        image: gcr.io/tmogoserverless/storefinder/query:latest
+        env:
+          - name: ELASTIC_URL
+            value: http://storelocator-elastic:9200
