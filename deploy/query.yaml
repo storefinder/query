@@ -20,7 +20,7 @@ spec:
         knative.dev/type: container
     spec:
       container:
-        image: gcr.io/$PROJECT_ID/storefinder/query:latest
+        image: gcr.io/tmogoserverless/storefinder/query:latest
         env:
         - name: ELASTIC_URL
           value: http://storelocator-elastic:9200
