@@ -75,11 +75,12 @@ func Search() http.HandlerFunc {
 		esProxy = elastic.NewProxy(config)
 		if response, err = esProxy.Search(queryRequest, indexName); err != nil {
 			httpStatus = http.StatusInternalServerError
-			log.Infof(err.Error())
 			e = models.Error{
 				Message: serverError,
 			}
 			errors = append(errors, e)
+			//re-initializing because response will be nil when errors with search
+			response = &models.StoreQueryResponse{}
 		}
 	done:
 		if len(errors) > 0 {
